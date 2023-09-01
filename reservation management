@@ -1,0 +1,50 @@
+<!-- reservation-management.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Management</title>
+</head>
+<body>
+    <h1>Reservation Management</h1>
+
+    <!-- Display existing reservations from the server -->
+    <div id="reservationsList"></div>
+
+    <script>
+        // Fetch existing reservations from the server and display them
+        fetch('/api/reservations')
+            .then(response => response.json())
+            .then(data => {
+                const reservationsList = document.getElementById("reservationsList");
+                data.forEach(reservation => {
+                    const reservationElement = document.createElement("div");
+                    reservationElement.innerHTML = `
+                        <p>Name: ${reservation.name}</p>
+                        <p>Date: ${reservation.month} ${reservation.date}</p>
+                        <p>Time: ${reservation.time}</p>
+                        <button onclick="cancelReservation(${reservation.id})">Cancel</button>
+                    `;
+                    reservationsList.appendChild(reservationElement);
+                });
+            })
+            .catch(error => console.error(error));
+
+        // Function to cancel a reservation
+        function cancelReservation(reservationId) {
+            // Send an API request to cancel the reservation on the server
+            fetch(`/api/reservations/${reservationId}`, { method: 'DELETE' })
+                .then(response => {
+                    if (response.status === 200) {
+                        // Reservation canceled successfully
+                        // You can update the UI or display a confirmation message here
+                    } else {
+                        // Handle errors if necessary
+                    }
+                })
+                .catch(error => console.error(error));
+        }
+    </script>
+</body>
+</html>
