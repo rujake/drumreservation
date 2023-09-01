@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drum Reservation</title>
+    <style>
+        /* Add your CSS styling here */
+    </style>
+</head>
+<body>
+    <h1>Drum Reservation</h1>
+    <form id="reservationForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        
+        <label for="month">Month:</label>
+        <select id="month" required>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <!-- Add more months here -->
+        </select>
+
+        <label for="date">Date:</label>
+        <input type="number" id="date" min="1" max="31" required>
+
+        <label for="time">Time:</label>
+        <input type="time" id="time" required>
+
+        <button type="submit">Reserve</button>
+    </form>
+
+    <div id="reservationStatus"></div>
+
+    <script>
+        const reservationForm = document.getElementById("reservationForm");
+        const reservationStatus = document.getElementById("reservationStatus");
+
+        reservationForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Get values from the form
+            const name = document.getElementById("name").value;
+            const month = document.getElementById("month").value;
+            const date = document.getElementById("date").value;
+            const time = document.getElementById("time").value;
+
+            // Create a reservation object
+            const reservation = {
+                name,
+                month,
+                date,
+                time
+            };
+
+            // Display reservation confirmation
+            reservationStatus.innerHTML = `
+                <p>Reservation confirmed for:</p>
+                <p>Name: ${reservation.name}</p>
+                <p>Date: ${reservation.month} ${reservation.date}</p>
+                <p>Time: ${reservation.time}</p>
+            `;
+
+            // You can also send the reservation data to a server for storage here
+
+            // Clear the form
+            reservationForm.reset();
+        });
+    </script>
+</body>
+</html>
